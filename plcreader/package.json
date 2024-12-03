@@ -1,0 +1,14 @@
+{
+  "name": "plcreader",
+  "version": "1.0.0",
+  "description": "read data from beckhoff plc",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ads-client": "^1.14.4"
+  }
+}
