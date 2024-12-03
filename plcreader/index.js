@@ -4,8 +4,8 @@ const { Client } = require('ads-client');
 const client = new Client({
   targetAmsNetId: '10.193.21.105.1.1', // target AMS Net ID of PLC
   targetAdsPort: 851,                  // ADS port for TwinCAT not tobe changed
-  localAmsNetId: '192.168.0.125.1.1',  // My local AMS Net ID with asset number 21
-  localAdsPort: 32725,                 // Unique local ADS port number not to be changed
+  localAmsNetId: '192.168.0.125.1.1',  // local AMS Net ID 192.168.0.1XX where XX is the asset number
+  localAdsPort: 32725,                 // Unique local ADS port number 327XX where XX is the asset number
   routerAddress: '192.168.0.210',      // Router IP for beckoff PLC
   routerTcpPort: 48898                 // Router TCP port not to be changed
 });
@@ -21,10 +21,9 @@ const tags = [
   'HMI_GVL.M.Rob3.ROBOTPOS.X', //H-Bot positions
   'HMI_GVL.M.Rob3.ROBOTPOS.Y', //H-Bot positions
   'HMI_GVL.M.Rob3.ROBOTPOS.Z', //H-Bot positions
-  //'HMI_GVL.M.Rob3.MACTTORQUE.MACTTORQUE' //Array of H-Bot torque values
-  'HMI_GVL.M.Rob3.MACTTORQUE.MACTTORQUE[1]', //H-Bot torque
-  //'HMI_GVL.M.Rob3.MACTTORQUE.MACTTORQUE[2]',//H-Bot torque
-  //'HMI_GVL.M.Rob3.MACTTORQUE.MACTTORQUE[3]'//H-Bot torque
+  'HMI_GVL.M.Rob3.MACTTORQUE[1]', //H-Bot torque
+  'HMI_GVL.M.Rob3.MACTTORQUE[2]',//H-Bot torque
+  'HMI_GVL.M.Rob3.MACTTORQUE[3]'//H-Bot torque
 ];
 
 // Function to read tags
