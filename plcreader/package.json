@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ads-client": "^1.14.4"
+    "ads-client": "^1.14.4",
+    "mqtt": "^5.10.3"
   }
 }
