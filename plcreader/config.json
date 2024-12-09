@@ -1,0 +1,125 @@
+{
+  "adsClient": {
+    "localAmsNetId": "192.168.0.125.1.1",
+    "localAdsPort": 32725,
+    "targetAmsNetId": "10.193.21.105.1.1",
+    "targetAdsPort": 851,
+    "routerAddress": "192.168.0.210",
+    "routerTcpPort": 48898
+  },
+
+  "mqtt": {
+    "brokerUrl": "mqtt://192.168.0.211",
+    "mqttPort": 1883,
+    "Organization": "m",
+    "Division": "iotacademy",
+    "Plant": "conestoga",
+    "Area": "presorter",
+    "Line": "smart",
+    "Workstation": "Team1"
+  },
+  "plctags": [
+    {
+      "name": "HMI_GVL.M.INITIALIZED",
+      "type": "status",
+      "machine": "workcell",
+      "attribute": "initialized"
+    },
+    {
+      "name": "HMI_GVL.M.RUNNING",
+      "type": "status",
+      "machine": "workcell",
+      "attribute": "running"
+    },
+    {
+      "name": "HMI_GVL.M.PAUSED",
+      "type": "status",
+      "machine": "workcell",
+      "attribute": "paused"
+    },
+    {
+      "name": "HMI_GVL.M.SPEEDPERCENTAGE",
+      "type": "status",
+      "machine": "workcell",
+      "attribute": "override"
+    },
+    {
+      "name": "HMI_GVL.M.SAFETY_ENABLE",
+      "type": "status",
+      "machine": "workcell",
+      "attribute": "safety_enabled"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.INITIALIZED",
+      "type": "status",
+      "machine": "robot3",
+      "attribute": "initialized"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.RUNNING",
+      "type": "status",
+      "machine": "robot3",
+      "attribute": "running"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.WSVIOLATION",
+      "type": "status",
+      "machine": "robot3",
+      "attribute": "workspaceviolation"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.PAUSED",
+      "type": "status",
+      "machine": "robot3",
+      "attribute": "paused"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.SPEEDPERCENTAGE",
+      "type": "status",
+      "machine": "robot3",
+      "attribute": "override"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.FINISHEDPARTNUM",
+      "type": "status",
+      "machine": "robot3",
+      "attribute": "partcount"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.ROBOTPOS.X",
+      "type": "motion",
+      "machine": "robot3",
+      "attribute": "position_x"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.ROBOTPOS.Y",
+      "type": "motion",
+      "machine": "robot3",
+      "attribute": "position_y"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.ROBOTPOS.Z",
+      "type": "motion",
+      "machine": "robot3",
+      "attribute": "position_z"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.MACTTORQUE[1]",
+      "type": "motion",
+      "machine": "robot3",
+      "attribute": "torque_1"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.MACTTORQUE[2]",
+      "type": "motion",
+      "machine": "robot3",
+      "attribute": "torque_2"
+    },
+    {
+      "name": "HMI_GVL.M.Rob3.MACTTORQUE[3]",
+      "type": "motion",
+      "machine": "robot3",
+      "attribute": "torque_3"
+    }
+  ]
+}

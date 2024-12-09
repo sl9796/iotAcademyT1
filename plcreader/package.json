@@ -1,14 +1,18 @@
 {
-  "name": "plcreader",
+  "name": "publisher",
   "version": "1.0.0",
-  "description": "read data from beckhoff plc",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "test.js"
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/ads-client": "^1.14.6",
     "ads-client": "^1.14.4",
     "mqtt": "^5.10.3"
   }
