@@ -1,0 +1,41 @@
+﻿<!doctype html>
+<head>
+<title>Test API</title>
+</head>
+
+<script>
+
+async function getData(url)
+{
+	const response = await fetch(url);
+	return await response.json();
+}
+
+async function testAPI()
+{
+	let u = "http://127.0.0.1:3000/timestable/";
+	let ttable = parseInt (document.getElementById("whichTable").value, 10);
+	if (ttable < 1)
+		ttable = 1;
+	u = u + ttable.toString();
+
+	let j = await getData(u);
+
+	document.getElementById("showData").innerHTML = j;
+}
+</script>
+
+</body>
+
+<h1>Test API</h1>
+<p>
+
+<label for="whichTable">Which Times Table?</label>
+<input type="number" id="whichTable" value="5"></input>
+<input type="button" value="GO" onClick="testAPI()"></input>
+
+<table border=1 width=400>
+<tr>
+<td id="showData"><i>click GO button!</i></td>
+</tr>
+</table>
