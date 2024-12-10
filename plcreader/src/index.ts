@@ -11,6 +11,7 @@ import * as ads from "ads-client";
 import * as mqtt from "mqtt";
 import * as fs from "fs";
 import * as path from "path";
+import { Iplctag, IMQTTSimplePayload, IMQTTMotionPayload } from "./interfaces";
 
 //function to read config file as JSON
 const readJSON = (filename: string): any => {
@@ -22,18 +23,7 @@ const setConfigFilename = (filename: string): string => {
   //construct full path name
   return path.dirname(__filename).concat("/../", filename);
 }
-
 let config = readJSON(setConfigFilename('config.json'));
-
-//interface for plc tag objects in config.json
-interface plctag {
-  name: string
-  machine: string
-  type: string
-  attribute: string
-  value?: number
-}
-
 
 //initialize ads client
 const client = new ads.Client(config.adsClient);
@@ -41,6 +31,7 @@ const client = new ads.Client(config.adsClient);
 const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
 //set base topic according t config
 const baseTopic: string = `${config.mqtt.Organization}/${config.mqtt.Division}/${config.mqtt.Plant}/${config.mqtt.Area}/${config.mqtt.Line}/${config.mqtt.Workstation}`;
+console.log(baseTopic);
 // Event listener for successful MQTT connection
 mqttClient.on("connect", () => {
   console.log("Connected to MQTT broker"); //MQTT connection successful
@@ -55,7 +46,7 @@ mqttClient.on("packetsend", (packetsend) => {
 });
 
 //function to subscribe to all tags listed in config
-const subscribeToTags = async (tags: plctag[]) => {
+const subscribeToTags = async (tags: Iplctag[]) => {
   for (const tag of tags) {
     try {
       client.subscribe(tag.name, async (result, sub) => await publishSubscribedTags(tag, result, sub), 500);
@@ -67,14 +58,14 @@ const subscribeToTags = async (tags: plctag[]) => {
 };
 
 //function to publish info to MQTT broker
-const publishSubscribedTags = async (tag: plctag, data: ads.SubscriptionCallbackData, sub: ads.Subscription) => {
+const publishSubscribedTags = async (tag: Iplctag, data: ads.SubscriptionCallbackData, sub: ads.Subscription) => {
   try {
-    const payload = {
+    const payload: IMQTTSimplePayload = {
       value: data.value,
       type: data.type.type,
       timestamp: data.timeStamp.toISOString()
     }
-    await mqttClient.publishAsync(`${baseTopic}/${tag.machine}/${tag.attribute}`, JSON.stringify(payload));
+    await mqttClient.publishAsync(`${baseTopic}/${tag.machine}/${tag.type}/${tag.attribute}`, JSON.stringify(payload));
     //console.log(`${baseTopic}/${tag.machine}/${tag.attribute}`, JSON.stringify(payload));
   } catch (err: any) {
     console.log(err.message);
@@ -82,12 +73,12 @@ const publishSubscribedTags = async (tag: plctag, data: ads.SubscriptionCallback
 }
 //function to create an object containing arrays, grouping tags according to their machine attribute
 //TODO: make 'any' return type specific
-const createMachineGroups = (array: plctag[]): any => {
+const createMachineGroups = (array: Iplctag[]): any => {
   try {
-    const machineGroups: { [key: string]: plctag[] } = {};
+    const machineGroups: { [key: string]: Iplctag[] } = {};
 
     //group plctags according to machine attribute
-    array.forEach((tag: plctag) => {
+    array.forEach((tag: Iplctag) => {
       const machine = tag.machine
       //if current group does not exist, create it
       if (!machineGroups[machine]) {
@@ -102,7 +93,7 @@ const createMachineGroups = (array: plctag[]): any => {
   }
 }
 //function to read motion data for specific machine
-const readMotionTags = async (tags: plctag[]): Promise<{ [key: string]: number }> => {
+const readMotionTags = async (tags: Iplctag[]): Promise<{ [key: string]: number }> => {
   //object to hold retrieved data
   const dataObj: { [key: string]: number } = {};
   let tagData: ads.SymbolData;
@@ -122,14 +113,18 @@ const readMotionTags = async (tags: plctag[]): Promise<{ [key: string]: number }
   return dataObj;
 }
 
-const publishMotionTags = async (motionData: any, machine: string) => {
+const publishMotionTags = async (motionData: { [key: string]: number }, machine: string) => {
+  try {
+    const payload: IMQTTMotionPayload = {
+      ...motionData,
+      timestamp: new Date().toISOString()
+    }
 
-  const payload = {
-    ...motionData,
-    timestamp: new Date().toISOString()
+    await mqttClient.publishAsync(`${baseTopic}/${machine}/motion/pos`, JSON.stringify(payload));
+
+  } catch (err: any) {
+    console.error(err.message);
   }
-
-  await mqttClient.publishAsync(`${baseTopic}/${machine}/pos`, JSON.stringify(payload));
 
 }
 
@@ -164,18 +159,18 @@ async function main() {
 
     //subscribe to ALL tags listed in config -publish on change
     await subscribeToTags(config.plctags);
-    const groups: any = createMachineGroups(config.plctags);
 
     //create single topic with motion information for each machine found in config
     //"fully qualified position data": X,Y,Z, Torque, Timestamp
     //TODO: make separate function?
+    const groups: any = createMachineGroups(config.plctags);
     setInterval(async () => {
       for (const machine in groups) {
         if (groups.hasOwnProperty(machine)) {
           const tagsForMachine = groups[machine];
           const dataTosend = await readMotionTags(groups[machine])
           if (!(Object.keys(dataTosend).length === 0)) {
-            publishMotionTags(dataTosend, machine);
+            await publishMotionTags(dataTosend, machine);
           }
         }
       }

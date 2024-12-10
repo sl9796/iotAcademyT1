@@ -1,4 +1,11 @@
 "use strict";
+/*
+ * index.ts
+ *
+ * This source file will implement
+ * -reading tags from Beckhoff PLC via ADS protocol
+ * -publishing data to HiveMQ MQTT broker
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -32,13 +39,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
- * index.ts
- *
- * This source file will implement
- * -reading tags from Beckhoff PLC via ADS protocol
- * -publishing data to HiveMQ MQTT broker
- */
 const ads = __importStar(require("ads-client"));
 const mqtt = __importStar(require("mqtt"));
 const fs = __importStar(require("fs"));
@@ -60,6 +60,7 @@ const client = new ads.Client(config.adsClient);
 const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
 //set base topic according t config
 const baseTopic = `${config.mqtt.Organization}/${config.mqtt.Division}/${config.mqtt.Plant}/${config.mqtt.Area}/${config.mqtt.Line}/${config.mqtt.Workstation}`;
+console.log(baseTopic);
 // Event listener for successful MQTT connection
 mqttClient.on("connect", () => {
     console.log("Connected to MQTT broker"); //MQTT connection successful
@@ -92,7 +93,7 @@ const publishSubscribedTags = (tag, data, sub) => __awaiter(void 0, void 0, void
             type: data.type.type,
             timestamp: data.timeStamp.toISOString()
         };
-        yield mqttClient.publishAsync(`${baseTopic}/${tag.machine}/${tag.attribute}`, JSON.stringify(payload));
+        yield mqttClient.publishAsync(`${baseTopic}/${tag.machine}/${tag.type}/${tag.attribute}`, JSON.stringify(payload));
         //console.log(`${baseTopic}/${tag.machine}/${tag.attribute}`, JSON.stringify(payload));
     }
     catch (err) {
@@ -140,8 +141,13 @@ const readMotionTags = (tags) => __awaiter(void 0, void 0, void 0, function* () 
     return dataObj;
 });
 const publishMotionTags = (motionData, machine) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = Object.assign(Object.assign({}, motionData), { timestamp: new Date().toISOString() });
-    yield mqttClient.publishAsync(`${baseTopic}/${machine}/pos`, JSON.stringify(payload));
+    try {
+        const payload = Object.assign(Object.assign({}, motionData), { timestamp: new Date().toISOString() });
+        yield mqttClient.publishAsync(`${baseTopic}/${machine}/motion/pos`, JSON.stringify(payload));
+    }
+    catch (err) {
+        console.error(err.message);
+    }
 });
 //function to facilitate graceful shutdown
 const shutdown = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -164,24 +170,25 @@ const shutdown = () => __awaiter(void 0, void 0, void 0, function* () {
  */
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        process.on("SIGINT", shutdown); //disconnect on ctrl+c, graceful shutdown
-        process.on("SIGTERM", shutdown);
+        //graceful shutdown
+        process.on("SIGINT", shutdown); //ctrl+c
+        process.on("SIGTERM", shutdown); //process terminated
         try {
             yield client.connect();
             console.log("Connected to Beckhoff PLC");
             //subscribe to ALL tags listed in config -publish on change
             yield subscribeToTags(config.plctags);
-            const groups = createMachineGroups(config.plctags);
             //create single topic with motion information for each machine found in config
             //"fully qualified position data": X,Y,Z, Torque, Timestamp
             //TODO: make separate function?
+            const groups = createMachineGroups(config.plctags);
             setInterval(() => __awaiter(this, void 0, void 0, function* () {
                 for (const machine in groups) {
                     if (groups.hasOwnProperty(machine)) {
                         const tagsForMachine = groups[machine];
                         const dataTosend = yield readMotionTags(groups[machine]);
                         if (!(Object.keys(dataTosend).length === 0)) {
-                            publishMotionTags(dataTosend, machine);
+                            yield publishMotionTags(dataTosend, machine);
                         }
                     }
                 }

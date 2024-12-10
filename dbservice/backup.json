@@ -1,0 +1,94 @@
+{
+    "plctags": {
+    "workcell": [
+      {
+        "tagname": "HMI_GVL.M.INITIALIZED",
+        "type": "status",
+        "attribute": "initialized"
+      },
+      {
+        "tagname": "HMI_GVL.M.RUNNING",
+        "type": "status",
+        "attribute": "running"
+      },
+      {
+        "tagname": "HMI_GVL.M.PAUSED",
+        "type": "status",
+        "attribute": "paused"
+      },
+      {
+        "tagname": "HMI_GVL.M.SPEEDPERCENTAGE",
+        "type": "status",
+        "attribute": "override"
+      },
+      {
+        "tagname": "HMI_GVL.M.SAFETY_ENABLE",
+        "type": "status",
+        "attribute": "safety_enabled"
+      }
+    ],
+
+    "robot3": [
+      {
+        "tagname": "HMI_GVL.M.Rob3.INITIALIZED",
+        "type": "status",
+        "attribute": "initialized"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.RUNNING",
+        "type": "status",
+        "attribute": "running"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.WSVIOLATION",
+        "type": "status",
+        "attribute": "workspaceviolation"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.PAUSED",
+        "type": "status",
+        "attribute": "paused"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.SPEEDPERCENTAGE",
+        "type": "status",
+        "attribute": "override"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.FINISHEDPARTNUM",
+        "type": "status",
+        "attribute": "partcount"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.ROBOTPOS.X",
+        "type": "motion",
+        "attribute": "position_x"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.ROBOTPOS.Y",
+        "type": "motion",
+        "attribute": "position_y"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.ROBOTPOS.Z",
+        "type": "motion",
+        "attribute": "position_z"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.MACTTORQUE[1]",
+        "type": "motion",
+        "attribute": "torque_1"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.MACTTORQUE[2]",
+        "type": "motion",
+        "attribute": "torque_2"
+      },
+      {
+        "tagname": "HMI_GVL.M.Rob3.MACTTORQUE[3]",
+        "type": "motion",
+        "attribute": "torque_3"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mqtt": {
+    "brokerUrl": "mqtt://192.168.0.211",
+    "mqttPort": 1883,
+    "Organization": "m",
+    "Division": "iotacademy",
+    "Plant": "conestoga",
+    "Area": "presorter",
+    "Line": "smart",
+    "Workstation": "Team1"
+  },
+ "postgre_config" :{
+    "user": "postgres",
+    "host": "192.168.0.211",
+    "port": 3306,
+    "database": "academy25",
+    "password": "academy2024!"
+  }
+}
