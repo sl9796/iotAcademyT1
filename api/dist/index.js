@@ -87,24 +87,33 @@ apiRouter.get('/timestable/:table', (req, res) => {
 });
 //route handler for dbRouter
 dbRouter.get('/filter', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let from = req.query.from;
-    let to = req.query.to;
-    const dbconf = {
-        user: "postgres",
-        host: "192.168.0.211",
-        port: 3306,
-        database: "academy25",
-        password: "academy2024!"
-    };
-    const db = new pg.Client(dbconf);
-    yield db.connect();
-    const query = `SELECT * FROM "hbot_motion" WHERE timestamp >= '${from}' AND timestamp <= '${to}'`;
-    //const values:any = [];
-    console.log(query);
-    const dbresult = yield db.query(query);
-    db.end();
-    res.send(dbresult);
-    //http://127.0.0.1:3000/filter/?from=2024-12-10T15:07:09.177Z&to=2024-12-10T15:07:21.021Z
+    //basic SELECT from db
+    try {
+        let from = req.query.from;
+        let to = req.query.to;
+        //db config
+        //TODO: add config.json support
+        const dbconf = {
+            user: "postgres",
+            host: "192.168.0.211",
+            port: 3306,
+            database: "academy25",
+            password: "academy2024!"
+        };
+        //instantiate client and connect
+        const db = new pg.Client(dbconf);
+        yield db.connect();
+        const query = `SELECT * FROM "hbot_motion" WHERE timestamp >= '${from}' AND timestamp <= '${to}'`;
+        console.log(query);
+        const dbresult = yield db.query(query);
+        //end connection to db after query
+        db.end();
+        res.send(dbresult);
+        //http://127.0.0.1:3000/filter/?from=2024-12-10T15:07:09.177Z&to=2024-12-10T15:07:21.021Z
+    }
+    catch (err) {
+        console.log(err);
+    }
 }));
 app.use(apiRouter);
 app.use(dbRouter);

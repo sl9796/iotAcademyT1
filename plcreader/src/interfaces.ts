@@ -1,5 +1,3 @@
-import { PLCValue } from "ads-client"
-
 //interface for plc tag objects in config.json
 export interface Iplctag {
     name: string
@@ -9,7 +7,7 @@ export interface Iplctag {
 }
 
 export interface IMQTTSimplePayload {
-    value: PLCValue
+    value: number
     type: string
     timestamp: string
 }

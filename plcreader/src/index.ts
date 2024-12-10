@@ -61,7 +61,7 @@ const subscribeToTags = async (tags: Iplctag[]) => {
 const publishSubscribedTags = async (tag: Iplctag, data: ads.SubscriptionCallbackData, sub: ads.Subscription) => {
   try {
     const payload: IMQTTSimplePayload = {
-      value: data.value,
+      value: Number(data.value),
       type: data.type.type,
       timestamp: data.timeStamp.toISOString()
     }
