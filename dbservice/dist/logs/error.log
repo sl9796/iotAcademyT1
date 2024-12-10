@@ -1,0 +1,2 @@
+{"level":"error","message":"help me","service":"logger01","timestamp":"2024-12-10 16:30:25"}
+{"level":"error","message":"oh no, an error!","service":"logger01","timestamp":"2024-12-10 16:30:25"}

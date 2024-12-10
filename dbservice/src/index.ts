@@ -3,6 +3,25 @@ import * as mqtt from 'mqtt';
 import * as pg from 'pg';
 import * as fs from "fs";
 import * as path from "path";
+import { createLogger, format, transports } from 'winston';
+
+//earl d. wilson
+const winstonConfig = {
+  level: 'info',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    format.json()
+  ),
+  defaultMeta: { service: 'logger01' },
+  transports: [
+    new transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new transports.File({ filename: 'logs/all.log' })
+  ]
+};
 
 //function to read config file as JSON
 const readJSON = (filename: string): any => {
@@ -15,37 +34,25 @@ const setConfigFilename = (filename: string): string => {
   return path.dirname(__filename).concat("/../", filename);
 }
 
+//-----------------------------------
+//Global variables
+//-----------------------------------
+let logger: any;
 let config = readJSON(setConfigFilename('config.json'));
+//create global mqttClient for later use
+let mqttClient: mqtt.MqttClient;
+//const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+const dbclient: pg.Client = new pg.Client(config.postgre_config);
 
-const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
-const dbclient = new pg.Client(config.postgre_config);
-
-// Handle incoming MQTT messages
-mqttClient.on('message', async (topic, message) => {
-  handleMQTTMessage(topic, message)
-});
-// mqtt error listener
-mqttClient.on('error', (error) => {
-  console.error('MQTT Error:', error);
-});
-//dbclient error listener
-dbclient.on('error', (error) => {
-  console.error('Database Error:', error);
-});
-//subscribe to topics on connect
-mqttClient.on('connect', () => {
-  console.log('Connected to MQTT broker');
-  // Subscribe to Team1 topics
-  //TODO: build topic string from config
-  mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
-    if (!err) {
-      console.log('Subscribed to Team1 topics');
-    }
-  });
-});
-
+//-----------------------------------
+//Functions
+//-----------------------------------
 const handleMQTTMessage = async (topic: string, message: Buffer) => {
   try {
+    if (!mqttClient) {
+      logger.log({ level: 'error', message: 'MQTT client is not initialized' })
+      throw new Error('MQTT client is not initialized')
+    }
     if (topic.endsWith("pos")) {
       const payload: IMQTTMotionPayload = JSON.parse(message.toString());
       // Handle position data for robot3
@@ -64,7 +71,7 @@ const handleMQTTMessage = async (topic: string, message: Buffer) => {
       ];
 
       await dbclient.query(query, values);
-      console.log('Inserted position data:', values);
+      logger.log({ level: 'info', message: 'Inserted position data:', values })
 
     } else if (topic.includes("status")) {
       // Handle workcell data
@@ -89,10 +96,10 @@ const handleMQTTMessage = async (topic: string, message: Buffer) => {
       ];
 
       await dbclient.query(query, values);
-      console.log('query sent:', values);
+      logger.log({ level: 'info', message: 'query sent:', values });
     }
-  } catch (error) {
-    console.error('Error processing message:', error);
+  } catch (err: any) {
+    logger.log({ level: 'error', message: err.message })
   }
 }
 
@@ -100,12 +107,12 @@ const handleMQTTMessage = async (topic: string, message: Buffer) => {
 const shutdown = async () => {
   try {
     await dbclient.end();
-    console.log("Disconnected from Database");
+    logger.log({ level: 'info', message: 'Disconnected from Database' })
     await mqttClient.endAsync();
-    console.log("Disconnected from MQTT Broker");
+    logger.log({ level: 'info', message: 'Disconnected from MQTT Broker' })
     process.exit();
   } catch (err: any) {
-    console.error(err.message);
+    logger.log({ level: 'error', message: err.message })
   }
 };
 
@@ -113,8 +120,42 @@ async function main() {
   // Graceful shutdown
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
+
+  //set up winston logger
+  logger = createLogger(winstonConfig);
+  logger.add(new transports.Console({
+    format: format.combine(
+      format.colorize(),
+      format.simple()
+    )
+  }));
+
+  mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+  // Handle incoming MQTT messages
+  mqttClient.on('message', async (topic, message) => {
+    handleMQTTMessage(topic, message)
+  });
+  // mqtt error listener
+  mqttClient.on('error', (err: any) => {
+    logger.log({ level: 'error', message: 'MQTT Error ' + err.message })
+  });
+  //dbclient error listener
+  dbclient.on('error', (err: any) => {
+    logger.log({ level: 'error', message: 'Database error ' + err.message })
+  });
+  //subscribe to topics on connect
+  mqttClient.on('connect', () => {
+    logger.log({ level: 'info', message: 'Connected to MQTT broker' })
+    // Subscribe to Team1 topics
+    //TODO: build topic string from config
+    mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
+      if (!err) {
+        logger.log({ level: 'info', message: 'Subscribed to Team1 topics' })
+      }
+    });
+  });
   await dbclient.connect();
-  console.log("db connected")
+  logger.log({ level: 'info', message: "Connected to Database" })
 }
 
 main();
