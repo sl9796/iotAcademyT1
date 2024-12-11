@@ -89,7 +89,7 @@ const subscribeToTags = (tags) => __awaiter(void 0, void 0, void 0, function* ()
 const publishSubscribedTags = (tag, data, sub) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const payload = {
-            value: data.value,
+            value: Number(data.value),
             type: data.type.type,
             timestamp: data.timeStamp.toISOString()
         };

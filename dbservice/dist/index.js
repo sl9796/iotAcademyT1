@@ -74,6 +74,7 @@ const dbclient = new pg.Client(config.postgre_config);
 const handleMQTTMessage = (topic, message) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!mqttClient) {
+            logger.log({ level: 'error', message: 'MQTT client is not initialized' });
             throw new Error('MQTT client is not initialized');
         }
         if (topic.endsWith("pos")) {
@@ -93,7 +94,7 @@ const handleMQTTMessage = (topic, message) => __awaiter(void 0, void 0, void 0, 
                 payload.timestamp
             ];
             yield dbclient.query(query, values);
-            console.log('Inserted position data:', values);
+            logger.log({ level: 'info', message: 'Inserted position data:', values });
         }
         else if (topic.includes("status")) {
             // Handle workcell data
@@ -117,24 +118,24 @@ const handleMQTTMessage = (topic, message) => __awaiter(void 0, void 0, void 0, 
                 payload.timestamp
             ];
             yield dbclient.query(query, values);
-            console.log('query sent:', values);
+            logger.log({ level: 'info', message: 'query sent:', values });
         }
     }
-    catch (error) {
-        console.error('Error processing message:', error);
+    catch (err) {
+        logger.log({ level: 'error', message: err.message });
     }
 });
 //function to facilitate graceful shutdown
 const shutdown = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield dbclient.end();
-        console.log("Disconnected from Database");
+        logger.log({ level: 'info', message: 'Disconnected from Database' });
         yield mqttClient.endAsync();
-        console.log("Disconnected from MQTT Broker");
+        logger.log({ level: 'info', message: 'Disconnected from MQTT Broker' });
         process.exit();
     }
     catch (err) {
-        console.error(err.message);
+        logger.log({ level: 'error', message: err.message });
     }
 });
 function main() {
@@ -142,40 +143,37 @@ function main() {
         // Graceful shutdown
         process.on('SIGINT', shutdown);
         process.on('SIGTERM', shutdown);
+        //set up winston logger
         logger = (0, winston_1.createLogger)(winstonConfig);
         logger.add(new winston_1.transports.Console({
             format: winston_1.format.combine(winston_1.format.colorize(), winston_1.format.simple())
         }));
-        logger.log({ level: 'error', message: 'help me' });
-        logger.log({ level: 'info', message: 'help me too' });
-        logger.log({ level: 'info', message: 'hello Winston' });
-        logger.log({ level: 'error', message: 'oh no, an error!' });
         mqttClient = mqtt.connect(config.mqtt.brokerUrl);
         // Handle incoming MQTT messages
         mqttClient.on('message', (topic, message) => __awaiter(this, void 0, void 0, function* () {
             handleMQTTMessage(topic, message);
         }));
         // mqtt error listener
-        mqttClient.on('error', (error) => {
-            console.error('MQTT Error:', error);
+        mqttClient.on('error', (err) => {
+            logger.log({ level: 'error', message: 'MQTT Error ' + err.message });
         });
         //dbclient error listener
-        dbclient.on('error', (error) => {
-            console.error('Database Error:', error);
+        dbclient.on('error', (err) => {
+            logger.log({ level: 'error', message: 'Database error ' + err.message });
         });
         //subscribe to topics on connect
         mqttClient.on('connect', () => {
-            console.log('Connected to MQTT broker');
+            logger.log({ level: 'info', message: 'Connected to MQTT broker' });
             // Subscribe to Team1 topics
             //TODO: build topic string from config
             mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
                 if (!err) {
-                    console.log('Subscribed to Team1 topics');
+                    logger.log({ level: 'info', message: 'Subscribed to Team1 topics' });
                 }
             });
         });
         yield dbclient.connect();
-        console.log("db connected");
+        logger.log({ level: 'info', message: "Connected to Database" });
     });
 }
 main();
