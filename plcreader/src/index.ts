@@ -11,8 +11,10 @@ import * as ads from "ads-client";
 import * as mqtt from "mqtt";
 import * as fs from "fs";
 import * as path from "path";
+import { createLogger, format, transports } from 'winston';
 import { Iplctag, IMQTTSimplePayload, IMQTTMotionPayload } from "./interfaces";
 
+//helper functions to import config
 //function to read config file as JSON
 const readJSON = (filename: string): any => {
   const data: string = fs.readFileSync(filename).toString();
@@ -23,36 +25,50 @@ const setConfigFilename = (filename: string): string => {
   //construct full path name
   return path.dirname(__filename).concat("/../", filename);
 }
-let config = readJSON(setConfigFilename('config.json'));
 
-//initialize ads client
-const client = new ads.Client(config.adsClient);
-//connect to MQTT broker
-const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+//-----------------------------------
+//Global variables
+//-----------------------------------
+let logger: any;
+let config = readJSON(setConfigFilename('config.json'));
+//create global mqttClient for later use
+let mqttClient: mqtt.MqttClient;
+
 //set base topic according t config
 const baseTopic: string = `${config.mqtt.Organization}/${config.mqtt.Division}/${config.mqtt.Plant}/${config.mqtt.Area}/${config.mqtt.Line}/${config.mqtt.Workstation}`;
-console.log(baseTopic);
-// Event listener for successful MQTT connection
-mqttClient.on("connect", () => {
-  console.log("Connected to MQTT broker"); //MQTT connection successful
-});
-// Event listener for MQTT errors
-mqttClient.on("error", (err) => {
-  console.error("MQTT  error:", err.message);
-});
-//Event listener for sent MQTT packets
-mqttClient.on("packetsend", (packetsend) => {
-  console.log(packetsend)
-});
+
+//initialize ads client
+const adsClient = new ads.Client(config.adsClient);
+
+//earl d. wilson
+const winstonConfig = {
+  level: 'info',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    format.json()
+  ),
+  defaultMeta: { service: 'logger01' },
+  transports: [
+    new transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new transports.File({ filename: 'logs/all.log' })
+  ]
+};
+
+//-----------------------------------
+//Functions
+//-----------------------------------
 
 //function to subscribe to all tags listed in config
 const subscribeToTags = async (tags: Iplctag[]) => {
   for (const tag of tags) {
     try {
-      client.subscribe(tag.name, async (result, sub) => await publishSubscribedTags(tag, result, sub), 500);
-      //console.log(`${sub.target}: ${result.value}, Time: ${result.timeStamp}`), 500);
+      adsClient.subscribe(tag.name, async (result, sub) => await publishSubscribedTags(tag, result, sub), 500);
     } catch (err: any) {
-      console.error(`Error reading ${tag}:`, err.message);
+      logger.log({ level: 'error', message: `Error reading ${tag}. Message: ${err.message} ` });
     }
   }
 };
@@ -66,9 +82,8 @@ const publishSubscribedTags = async (tag: Iplctag, data: ads.SubscriptionCallbac
       timestamp: data.timeStamp.toISOString()
     }
     await mqttClient.publishAsync(`${baseTopic}/${tag.machine}/${tag.type}/${tag.attribute}`, JSON.stringify(payload));
-    //console.log(`${baseTopic}/${tag.machine}/${tag.attribute}`, JSON.stringify(payload));
   } catch (err: any) {
-    console.log(err.message);
+    logger.log({ level: 'error', message: err.message });
   }
 }
 //function to create an object containing arrays, grouping tags according to their machine attribute
@@ -89,7 +104,7 @@ const createMachineGroups = (array: Iplctag[]): any => {
     return machineGroups;
 
   } catch (err: any) {
-    console.log(err.message);
+    logger.log({ level: 'error', message: err.message });
   }
 }
 //function to read motion data for specific machine
@@ -102,11 +117,11 @@ const readMotionTags = async (tags: Iplctag[]): Promise<{ [key: string]: number 
     if (tag.type === "motion") {
       try {
         //read data for current tag
-        tagData = await client.readSymbol(tag.name);
+        tagData = await adsClient.readSymbol(tag.name);
         //add data to object
         Object.assign(dataObj, { [tag.attribute]: Number(tagData.value) })
       } catch (err: any) {
-        console.error(`Error reading ${tag}:`, err.message);
+        logger.log({ level: 'error', message: `Error reading ${tag}. Message: ${err.message} ` });
       }
     }
   }
@@ -123,7 +138,7 @@ const publishMotionTags = async (motionData: { [key: string]: number }, machine:
     await mqttClient.publishAsync(`${baseTopic}/${machine}/motion/pos`, JSON.stringify(payload));
 
   } catch (err: any) {
-    console.error(err.message);
+    logger.log({ level: 'error', message: err.message });
   }
 
 }
@@ -131,13 +146,13 @@ const publishMotionTags = async (motionData: { [key: string]: number }, machine:
 //function to facilitate graceful shutdown
 const shutdown = async () => {
   try {
-    await client.disconnect();
-    console.log("Disconnected from Beckhoff PLC");
+    await adsClient.disconnect();
+    logger.log({ level: 'info', message: 'Disconnected from PLC' })
     await mqttClient.endAsync();
-    console.log("Disconnected from MQTT Broker");
+    logger.log({ level: 'info', message: 'Disconnected from MQTT Broker' })
     process.exit();
   } catch (err: any) {
-    console.error(err.message);
+    logger.log({ level: 'error', message: err.message });
   }
 };
 
@@ -154,9 +169,33 @@ async function main() {
   process.on("SIGTERM", shutdown); //process terminated
 
   try {
-    await client.connect();
-    console.log("Connected to Beckhoff PLC");
+    //set up winston logger with console logging enabled
+    logger = createLogger(winstonConfig);
+    logger.add(new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.simple()
+      )
+    }));
+    //connect to MQTT broker
+    mqttClient = mqtt.connect(config.mqtt.brokerUrl);
 
+    // Event listener for successful MQTT connection
+    mqttClient.on("connect", () => {
+      logger.log({ level: 'info', message: 'Connected to MQTT broker' })
+    });
+    // Event listener for MQTT errors
+    mqttClient.on("error", (err) => {
+      logger.log({ level: 'error', message: 'MQTT error:' + err.message });
+    });
+    //Event listener for sent MQTT packets
+    mqttClient.on("packetsend", (packetsend) => {
+      console.log(packetsend) //for debugging
+    });
+
+    //connect adsClient
+    await adsClient.connect();
+    logger.log({ level: 'info', message: 'Connected to PLC' })
     //subscribe to ALL tags listed in config -publish on change
     await subscribeToTags(config.plctags);
 
@@ -177,7 +216,8 @@ async function main() {
     }, 1000);
 
   } catch (err: any) {
-    console.error("Error: ", err.message);
+    logger.log({ level: 'error', message: 'Error' + err.message });
+
   }
 }
 

@@ -5,24 +5,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { createLogger, format, transports } from 'winston';
 
-//earl d. wilson
-const winstonConfig = {
-  level: 'info',
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss'
-    }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: 'logger01' },
-  transports: [
-    new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'logs/all.log' })
-  ]
-};
-
+//helper functions to import config
 //function to read config file as JSON
 const readJSON = (filename: string): any => {
   const data: string = fs.readFileSync(filename).toString();
@@ -44,6 +27,23 @@ let mqttClient: mqtt.MqttClient;
 //const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
 const dbclient: pg.Client = new pg.Client(config.postgre_config);
 
+//earl d. wilson
+const winstonConfig = {
+  level: 'info',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    format.json()
+  ),
+  defaultMeta: { service: 'logger01' },
+  transports: [
+    new transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new transports.File({ filename: 'logs/all.log' })
+  ]
+};
 //-----------------------------------
 //Functions
 //-----------------------------------
@@ -120,42 +120,46 @@ async function main() {
   // Graceful shutdown
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
+  try {
+    //set up winston logger with console logging enabled
+    logger = createLogger(winstonConfig);
+    logger.add(new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.simple()
+      )
+    }));
 
-  //set up winston logger
-  logger = createLogger(winstonConfig);
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple()
-    )
-  }));
-
-  mqttClient = mqtt.connect(config.mqtt.brokerUrl);
-  // Handle incoming MQTT messages
-  mqttClient.on('message', async (topic, message) => {
-    handleMQTTMessage(topic, message)
-  });
-  // mqtt error listener
-  mqttClient.on('error', (err: any) => {
-    logger.log({ level: 'error', message: 'MQTT Error ' + err.message })
-  });
-  //dbclient error listener
-  dbclient.on('error', (err: any) => {
-    logger.log({ level: 'error', message: 'Database error ' + err.message })
-  });
-  //subscribe to topics on connect
-  mqttClient.on('connect', () => {
-    logger.log({ level: 'info', message: 'Connected to MQTT broker' })
-    // Subscribe to Team1 topics
-    //TODO: build topic string from config
-    mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
-      if (!err) {
-        logger.log({ level: 'info', message: 'Subscribed to Team1 topics' })
-      }
+    mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+    // Handle incoming MQTT messages
+    mqttClient.on('message', async (topic, message) => {
+      handleMQTTMessage(topic, message)
     });
-  });
-  await dbclient.connect();
-  logger.log({ level: 'info', message: "Connected to Database" })
+    // mqtt error listener
+    mqttClient.on('error', (err: any) => {
+      logger.log({ level: 'error', message: 'MQTT Error ' + err.message })
+    });
+    //dbclient error listener
+    dbclient.on('error', (err: any) => {
+      logger.log({ level: 'error', message: 'Database error ' + err.message })
+    });
+    //subscribe to topics on connect
+    mqttClient.on('connect', () => {
+      logger.log({ level: 'info', message: 'Connected to MQTT broker' })
+      // Subscribe to Team1 topics
+      //TODO: build topic string from config
+      mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
+        if (!err) {
+          logger.log({ level: 'info', message: 'Subscribed to Team1 topics' })
+        }
+      });
+    });
+    await dbclient.connect();
+    logger.log({ level: 'info', message: "Connected to Database" })
+  } catch (err: any) {
+    logger.log({ level: 'error', message: err.message })
+  }
+
 }
 
 main();

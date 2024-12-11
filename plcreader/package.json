@@ -14,6 +14,7 @@
   "dependencies": {
     "@types/ads-client": "^1.14.6",
     "ads-client": "^1.14.4",
-    "mqtt": "^5.10.3"
+    "mqtt": "^5.10.3",
+    "winston": "^3.17.0"
   }
 }
