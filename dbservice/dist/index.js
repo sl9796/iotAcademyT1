@@ -1,4 +1,11 @@
 "use strict";
+/*
+ * index.ts
+ *
+ * This source file will implement
+ * -subscribing to mqtt-topics for Capstone Team1
+ * -inserting received data into database
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -37,18 +44,7 @@ const pg = __importStar(require("pg"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const winston_1 = require("winston");
-//earl d. wilson
-const winstonConfig = {
-    level: 'info',
-    format: winston_1.format.combine(winston_1.format.timestamp({
-        format: 'YYYY-MM-DD HH:mm:ss'
-    }), winston_1.format.errors({ stack: true }), winston_1.format.splat(), winston_1.format.json()),
-    defaultMeta: { service: 'logger01' },
-    transports: [
-        new winston_1.transports.File({ filename: 'logs/error.log', level: 'error' }),
-        new winston_1.transports.File({ filename: 'logs/all.log' })
-    ]
-};
+//helper functions to import config
 //function to read config file as JSON
 const readJSON = (filename) => {
     const data = fs.readFileSync(filename).toString();
@@ -68,6 +64,18 @@ let config = readJSON(setConfigFilename('config.json'));
 let mqttClient;
 //const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
 const dbclient = new pg.Client(config.postgre_config);
+//earl d. wilson
+const winstonConfig = {
+    level: 'info',
+    format: winston_1.format.combine(winston_1.format.timestamp({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    }), winston_1.format.errors({ stack: true }), winston_1.format.splat(), winston_1.format.json()),
+    defaultMeta: { service: 'logger01' },
+    transports: [
+        new winston_1.transports.File({ filename: 'logs/error.log', level: 'error' }),
+        new winston_1.transports.File({ filename: 'logs/all.log' })
+    ]
+};
 //-----------------------------------
 //Functions
 //-----------------------------------
@@ -143,37 +151,42 @@ function main() {
         // Graceful shutdown
         process.on('SIGINT', shutdown);
         process.on('SIGTERM', shutdown);
-        //set up winston logger
-        logger = (0, winston_1.createLogger)(winstonConfig);
-        logger.add(new winston_1.transports.Console({
-            format: winston_1.format.combine(winston_1.format.colorize(), winston_1.format.simple())
-        }));
-        mqttClient = mqtt.connect(config.mqtt.brokerUrl);
-        // Handle incoming MQTT messages
-        mqttClient.on('message', (topic, message) => __awaiter(this, void 0, void 0, function* () {
-            handleMQTTMessage(topic, message);
-        }));
-        // mqtt error listener
-        mqttClient.on('error', (err) => {
-            logger.log({ level: 'error', message: 'MQTT Error ' + err.message });
-        });
-        //dbclient error listener
-        dbclient.on('error', (err) => {
-            logger.log({ level: 'error', message: 'Database error ' + err.message });
-        });
-        //subscribe to topics on connect
-        mqttClient.on('connect', () => {
-            logger.log({ level: 'info', message: 'Connected to MQTT broker' });
-            // Subscribe to Team1 topics
-            //TODO: build topic string from config
-            mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
-                if (!err) {
-                    logger.log({ level: 'info', message: 'Subscribed to Team1 topics' });
-                }
+        try {
+            //set up winston logger with console logging enabled
+            logger = (0, winston_1.createLogger)(winstonConfig);
+            logger.add(new winston_1.transports.Console({
+                format: winston_1.format.combine(winston_1.format.colorize(), winston_1.format.simple())
+            }));
+            mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+            // Handle incoming MQTT messages
+            mqttClient.on('message', (topic, message) => __awaiter(this, void 0, void 0, function* () {
+                handleMQTTMessage(topic, message);
+            }));
+            // mqtt error listener
+            mqttClient.on('error', (err) => {
+                logger.log({ level: 'error', message: 'MQTT Error ' + err.message });
             });
-        });
-        yield dbclient.connect();
-        logger.log({ level: 'info', message: "Connected to Database" });
+            //dbclient error listener
+            dbclient.on('error', (err) => {
+                logger.log({ level: 'error', message: 'Database error ' + err.message });
+            });
+            //subscribe to topics on connect
+            mqttClient.on('connect', () => {
+                logger.log({ level: 'info', message: 'Connected to MQTT broker' });
+                // Subscribe to Team1 topics
+                //TODO: build topic string from config
+                mqttClient.subscribe('m/iotacademy/conestoga/presorter/smart/Team1/#', (err) => {
+                    if (!err) {
+                        logger.log({ level: 'info', message: 'Subscribed to Team1 topics' });
+                    }
+                });
+            });
+            yield dbclient.connect();
+            logger.log({ level: 'info', message: "Connected to Database" });
+        }
+        catch (err) {
+            logger.log({ level: 'error', message: err.message });
+        }
     });
 }
 main();

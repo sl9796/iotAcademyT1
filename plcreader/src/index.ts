@@ -1,4 +1,3 @@
-
 /*
  * index.ts
  *
@@ -134,22 +133,22 @@ const publishMotionTags = async (motionData: { [key: string]: number }, machine:
       ...motionData,
       timestamp: new Date().toISOString()
     }
-
     await mqttClient.publishAsync(`${baseTopic}/${machine}/motion/pos`, JSON.stringify(payload));
 
   } catch (err: any) {
     logger.log({ level: 'error', message: err.message });
   }
-
 }
 
 //function to facilitate graceful shutdown
 const shutdown = async () => {
   try {
-    await adsClient.disconnect();
-    logger.log({ level: 'info', message: 'Disconnected from PLC' })
     await mqttClient.endAsync();
     logger.log({ level: 'info', message: 'Disconnected from MQTT Broker' })
+    if (adsClient.connection) {
+      await adsClient.disconnect();
+      logger.log({ level: 'info', message: 'Disconnected from PLC' })
+    }
     process.exit();
   } catch (err: any) {
     logger.log({ level: 'error', message: err.message });
@@ -217,7 +216,6 @@ async function main() {
 
   } catch (err: any) {
     logger.log({ level: 'error', message: 'Error' + err.message });
-
   }
 }
 

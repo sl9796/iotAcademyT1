@@ -43,6 +43,8 @@ const ads = __importStar(require("ads-client"));
 const mqtt = __importStar(require("mqtt"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const winston_1 = require("winston");
+//helper functions to import config
 //function to read config file as JSON
 const readJSON = (filename) => {
     const data = fs.readFileSync(filename).toString();
@@ -53,35 +55,40 @@ const setConfigFilename = (filename) => {
     //construct full path name
     return path.dirname(__filename).concat("/../", filename);
 };
+//-----------------------------------
+//Global variables
+//-----------------------------------
+let logger;
 let config = readJSON(setConfigFilename('config.json'));
-//initialize ads client
-const client = new ads.Client(config.adsClient);
-//connect to MQTT broker
-const mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+//create global mqttClient for later use
+let mqttClient;
 //set base topic according t config
 const baseTopic = `${config.mqtt.Organization}/${config.mqtt.Division}/${config.mqtt.Plant}/${config.mqtt.Area}/${config.mqtt.Line}/${config.mqtt.Workstation}`;
-console.log(baseTopic);
-// Event listener for successful MQTT connection
-mqttClient.on("connect", () => {
-    console.log("Connected to MQTT broker"); //MQTT connection successful
-});
-// Event listener for MQTT errors
-mqttClient.on("error", (err) => {
-    console.error("MQTT  error:", err.message);
-});
-//Event listener for sent MQTT packets
-mqttClient.on("packetsend", (packetsend) => {
-    console.log(packetsend);
-});
+//initialize ads client
+const adsClient = new ads.Client(config.adsClient);
+//earl d. wilson
+const winstonConfig = {
+    level: 'info',
+    format: winston_1.format.combine(winston_1.format.timestamp({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    }), winston_1.format.errors({ stack: true }), winston_1.format.splat(), winston_1.format.json()),
+    defaultMeta: { service: 'logger01' },
+    transports: [
+        new winston_1.transports.File({ filename: 'logs/error.log', level: 'error' }),
+        new winston_1.transports.File({ filename: 'logs/all.log' })
+    ]
+};
+//-----------------------------------
+//Functions
+//-----------------------------------
 //function to subscribe to all tags listed in config
 const subscribeToTags = (tags) => __awaiter(void 0, void 0, void 0, function* () {
     for (const tag of tags) {
         try {
-            client.subscribe(tag.name, (result, sub) => __awaiter(void 0, void 0, void 0, function* () { return yield publishSubscribedTags(tag, result, sub); }), 500);
-            //console.log(`${sub.target}: ${result.value}, Time: ${result.timeStamp}`), 500);
+            adsClient.subscribe(tag.name, (result, sub) => __awaiter(void 0, void 0, void 0, function* () { return yield publishSubscribedTags(tag, result, sub); }), 500);
         }
         catch (err) {
-            console.error(`Error reading ${tag}:`, err.message);
+            logger.log({ level: 'error', message: `Error reading ${tag}. Message: ${err.message} ` });
         }
     }
 });
@@ -94,10 +101,9 @@ const publishSubscribedTags = (tag, data, sub) => __awaiter(void 0, void 0, void
             timestamp: data.timeStamp.toISOString()
         };
         yield mqttClient.publishAsync(`${baseTopic}/${tag.machine}/${tag.type}/${tag.attribute}`, JSON.stringify(payload));
-        //console.log(`${baseTopic}/${tag.machine}/${tag.attribute}`, JSON.stringify(payload));
     }
     catch (err) {
-        console.log(err.message);
+        logger.log({ level: 'error', message: err.message });
     }
 });
 //function to create an object containing arrays, grouping tags according to their machine attribute
@@ -117,7 +123,7 @@ const createMachineGroups = (array) => {
         return machineGroups;
     }
     catch (err) {
-        console.log(err.message);
+        logger.log({ level: 'error', message: err.message });
     }
 };
 //function to read motion data for specific machine
@@ -129,12 +135,12 @@ const readMotionTags = (tags) => __awaiter(void 0, void 0, void 0, function* () 
         if (tag.type === "motion") {
             try {
                 //read data for current tag
-                tagData = yield client.readSymbol(tag.name);
+                tagData = yield adsClient.readSymbol(tag.name);
                 //add data to object
                 Object.assign(dataObj, { [tag.attribute]: Number(tagData.value) });
             }
             catch (err) {
-                console.error(`Error reading ${tag}:`, err.message);
+                logger.log({ level: 'error', message: `Error reading ${tag}. Message: ${err.message} ` });
             }
         }
     }
@@ -146,20 +152,22 @@ const publishMotionTags = (motionData, machine) => __awaiter(void 0, void 0, voi
         yield mqttClient.publishAsync(`${baseTopic}/${machine}/motion/pos`, JSON.stringify(payload));
     }
     catch (err) {
-        console.error(err.message);
+        logger.log({ level: 'error', message: err.message });
     }
 });
 //function to facilitate graceful shutdown
 const shutdown = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield client.disconnect();
-        console.log("Disconnected from Beckhoff PLC");
         yield mqttClient.endAsync();
-        console.log("Disconnected from MQTT Broker");
+        logger.log({ level: 'info', message: 'Disconnected from MQTT Broker' });
+        if (adsClient.connection) {
+            yield adsClient.disconnect();
+            logger.log({ level: 'info', message: 'Disconnected from PLC' });
+        }
         process.exit();
     }
     catch (err) {
-        console.error(err.message);
+        logger.log({ level: 'error', message: err.message });
     }
 });
 /*
@@ -174,8 +182,28 @@ function main() {
         process.on("SIGINT", shutdown); //ctrl+c
         process.on("SIGTERM", shutdown); //process terminated
         try {
-            yield client.connect();
-            console.log("Connected to Beckhoff PLC");
+            //set up winston logger with console logging enabled
+            logger = (0, winston_1.createLogger)(winstonConfig);
+            logger.add(new winston_1.transports.Console({
+                format: winston_1.format.combine(winston_1.format.colorize(), winston_1.format.simple())
+            }));
+            //connect to MQTT broker
+            mqttClient = mqtt.connect(config.mqtt.brokerUrl);
+            // Event listener for successful MQTT connection
+            mqttClient.on("connect", () => {
+                logger.log({ level: 'info', message: 'Connected to MQTT broker' });
+            });
+            // Event listener for MQTT errors
+            mqttClient.on("error", (err) => {
+                logger.log({ level: 'error', message: 'MQTT error:' + err.message });
+            });
+            //Event listener for sent MQTT packets
+            mqttClient.on("packetsend", (packetsend) => {
+                console.log(packetsend); //for debugging
+            });
+            //connect adsClient
+            yield adsClient.connect();
+            logger.log({ level: 'info', message: 'Connected to PLC' });
             //subscribe to ALL tags listed in config -publish on change
             yield subscribeToTags(config.plctags);
             //create single topic with motion information for each machine found in config
@@ -195,7 +223,7 @@ function main() {
             }), 1000);
         }
         catch (err) {
-            console.error("Error: ", err.message);
+            logger.log({ level: 'error', message: 'Error' + err.message });
         }
     });
 }

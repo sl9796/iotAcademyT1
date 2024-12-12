@@ -1,4 +1,17 @@
 "use strict";
+/*
+ * index.ts
+ *
+ * This source file will implement [TODO – add in description]
+ */
+// TODO: add in import statements
+/*
+ * function main();
+ *
+ * This is the mainline code for our project. This code will
+ * perform the following work:
+ * TODO – add in description
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -35,23 +48,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
- * index.ts
- *
- * This source file will implement [TODO – add in description]
- */
-// TODO: add in import statements
-/*
- * function main();
- *
- * This is the mainline code for our project. This code will
- * perform the following work:
- * TODO – add in description
- */
 const express_1 = __importDefault(require("express"));
 const pg = __importStar(require("pg"));
+const path = __importStar(require("path"));
 const PORT = 3000;
 const app = (0, express_1.default)();
+//db config
+//TODO: add config.json support
+const dbconf = {
+    user: "postgres",
+    host: "192.168.0.211",
+    port: 3306,
+    database: "academy25",
+    password: "academy2024!"
+};
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.path}`);
     //continue default processing
@@ -62,7 +72,8 @@ app.get('/', (req, res) => {
     res.send("hello, this is api");
 });
 // set up route for simple web site file serving
-app.use(express_1.default.static('public'));
+app.use(express_1.default.static(path.resolve('./public')));
+//express.static.mime.define({'text/javascript': ['md']})
 //add more appropriate router names here
 const apiRouter = express_1.default.Router();
 const dbRouter = express_1.default.Router();
@@ -86,33 +97,49 @@ apiRouter.get('/timestable/:table', (req, res) => {
     res.send(tableoutput);
 });
 //route handler for dbRouter
-dbRouter.get('/filter', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+dbRouter.get('/robot3pos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //basic SELECT from db
+    //instantiate client and connect
+    const db = new pg.Client(dbconf);
     try {
-        let from = req.query.from;
-        let to = req.query.to;
-        //db config
-        //TODO: add config.json support
-        const dbconf = {
-            user: "postgres",
-            host: "192.168.0.211",
-            port: 3306,
-            database: "academy25",
-            password: "academy2024!"
-        };
-        //instantiate client and connect
-        const db = new pg.Client(dbconf);
+        const now = new Date();
+        let onehour = new Date();
+        onehour.setHours(onehour.getHours() - 1);
+        const from = req.query.from || onehour.toISOString(); //default now minus 1 hour 
+        const to = req.query.to || now.toISOString();
+        const limit = req.query.limit || '100';
         yield db.connect();
-        const query = `SELECT * FROM "hbot_motion" WHERE timestamp >= '${from}' AND timestamp <= '${to}'`;
+        const query = `SELECT * FROM "hbot_motion" WHERE timestamp >= '${from}' AND timestamp <= '${to}' ORDER BY timestamp DESC LIMIT '${limit}'`;
+        console.log(query);
+        const dbresult = yield db.query(query);
+        //end connection to db after query
+        db.end();
+        res.json(dbresult);
+        //http://127.0.0.1:3000/robot3pos/?from=2024-12-11T07:07:21.021Z&limit=350
+    }
+    catch (err) {
+        db.end();
+        console.log(err);
+    }
+}));
+dbRouter.get('/status', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //basic SELECT from db for status 
+    //instantiate client and connect
+    const db = new pg.Client(dbconf);
+    try {
+        let machine = req.query.machine || ''; //default value empty string
+        yield db.connect();
+        const query = `SELECT DISTINCT ON (tag) tag, value, timestamp FROM status where tag LIKE('%${machine}%') ORDER BY tag, timestamp DESC;`;
         console.log(query);
         const dbresult = yield db.query(query);
         //end connection to db after query
         db.end();
         res.send(dbresult);
-        //http://127.0.0.1:3000/filter/?from=2024-12-10T15:07:09.177Z&to=2024-12-10T15:07:21.021Z
+        //http://127.0.0.1:3000/robot3pos/?from=2024-12-11T07:07:21.021Z&limit=350
     }
     catch (err) {
-        console.log(err);
+        db.end(); //end connection on error
+        console.log(err.message);
     }
 }));
 app.use(apiRouter);

@@ -1,3 +1,286 @@
 {"level":"error","message":"help me","service":"logger01","timestamp":"2024-12-10 16:17:29"}
 {"level":"error","message":"help me","service":"logger01","timestamp":"2024-12-10 16:18:27"}
 {"level":"error","message":"help me","service":"logger01","timestamp":"2024-12-10 16:25:25"}
+{"level":"error","message":"null value in column \"torque_1\" of relation \"hbot_motion\" violates not-null constraint","service":"logger01","timestamp":"2024-12-11 09:18:22"}
+{"level":"error","message":"null value in column \"position_z\" of relation \"hbot_motion\" violates not-null constraint","service":"logger01","timestamp":"2024-12-11 09:18:22"}
+{"level":"error","message":"null value in column \"torque_3\" of relation \"hbot_motion\" violates not-null constraint","service":"logger01","timestamp":"2024-12-11 09:18:30"}
+{"level":"error","message":"null value in column \"torque_1\" of relation \"hbot_motion\" violates not-null constraint","service":"logger01","timestamp":"2024-12-11 09:18:33"}
+{"level":"error","message":"null value in column \"position_x\" of relation \"hbot_motion\" violates not-null constraint","service":"logger01","timestamp":"2024-12-11 09:18:34"}
+{"level":"error","message":"Database error Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 09:24:29"}
+{"level":"error","message":"MQTT Error read ECONNRESET","service":"logger01","timestamp":"2024-12-11 09:24:29"}
+{"level":"error","message":"MQTT Error connect ETIMEDOUT 192.168.0.211:1883","service":"logger01","timestamp":"2024-12-11 09:24:51"}
+{"level":"error","message":"MQTT Error connect ETIMEDOUT 192.168.0.211:1883","service":"logger01","timestamp":"2024-12-11 09:25:13"}
+{"level":"error","message":"MQTT Error connect ETIMEDOUT 192.168.0.211:1883","service":"logger01","timestamp":"2024-12-11 09:25:36"}
+{"level":"error","message":"MQTT Error connect ETIMEDOUT 192.168.0.211:1883","service":"logger01","timestamp":"2024-12-11 09:25:58"}
+{"level":"error","message":"MQTT Error connect ETIMEDOUT 192.168.0.211:1883","service":"logger01","timestamp":"2024-12-11 09:26:20"}
+{"level":"error","message":"MQTT Error connect ETIMEDOUT 192.168.0.211:1883","service":"logger01","timestamp":"2024-12-11 09:26:42"}
+{"level":"error","message":"MQTT Error read ECONNRESET","service":"logger01","timestamp":"2024-12-11 13:59:31"}
+{"level":"error","message":"Database error Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-11 14:12:10"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:12"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:12"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:13"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:14"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:15"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:16"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:17"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:18"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:18"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:19"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:20"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:20"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:21"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:22"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:23"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:24"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:25"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:25"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:26"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:26"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:28"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:29"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:29"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:30"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:31"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:32"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:32"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:33"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:33"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:34"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:35"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:36"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:37"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:39"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:40"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:40"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:41"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:41"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:42"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:42"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:44"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:45"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:46"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:46"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:47"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:49"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:49"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:50"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:50"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:51"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:51"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:52"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:53"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:54"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:55"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:56"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:57"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:57"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:58"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:12:59"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:00"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:01"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:02"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:03"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:03"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:04"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:04"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:05"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:06"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:07"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:08"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:09"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:10"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:11"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:11"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:12"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:12"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:13"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:14"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:15"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:16"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:17"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:18"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:19"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:20"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:20"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:21"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:21"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:22"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:23"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:24"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:25"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:26"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:27"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:27"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:28"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:28"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:29"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:31"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:32"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:32"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:33"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:34"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:35"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:35"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:36"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:36"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:38"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:39"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:39"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:41"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:41"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:42"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:43"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:43"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:44"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:45"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:45"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:47"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:47"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:48"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:49"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:50"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:50"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:51"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:51"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:52"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:53"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:54"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:55"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:56"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:57"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:57"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:58"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:58"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:13:59"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:00"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:01"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:02"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:03"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:04"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:05"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:05"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:06"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:06"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:07"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:08"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:09"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:10"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:11"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:12"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:13"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:13"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:14"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:14"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:15"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:16"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:17"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:18"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:19"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:20"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:21"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:21"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:22"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:22"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:23"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:25"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:25"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:26"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:28"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:28"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:28"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:29"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:29"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:29"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:30"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:30"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:31"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:32"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:33"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:34"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:35"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:36"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:36"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:37"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:37"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:38"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:39"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:41"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:41"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:42"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:43"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:44"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:44"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:44"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:45"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:47"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:47"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:48"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:49"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:50"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:51"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:51"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:52"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:52"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:53"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:54"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:55"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:57"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:57"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:58"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:58"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:59"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:14:59"}
+{"level":"error","message":"Client has encountered a connection error and is not queryable","service":"logger01","timestamp":"2024-12-11 14:15:00"}
+{"level":"error","message":"null value in column \"position_y\" of relation \"hbot_motion\" violates not-null constraint","service":"logger01","timestamp":"2024-12-11 14:21:01"}

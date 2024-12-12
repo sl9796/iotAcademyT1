@@ -1,3 +1,11 @@
+/*
+ * index.ts
+ *
+ * This source file will implement 
+ * -subscribing to mqtt-topics for Capstone Team1
+ * -inserting received data into database
+ */
+
 import { IMQTTMotionPayload, IMQTTSimplePayload } from 'interfaces';
 import * as mqtt from 'mqtt';
 import * as pg from 'pg';
@@ -159,7 +167,6 @@ async function main() {
   } catch (err: any) {
     logger.log({ level: 'error', message: err.message })
   }
-
 }
 
 main();

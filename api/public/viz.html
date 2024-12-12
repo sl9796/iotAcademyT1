@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>le chart</title>
+</head>
+<script src="./Chart.bundle.min.js"></script>
+<script src="./chart.js"></script>
+
+<body>
+	<style>
+		.chartContainer{
+			position: relative;
+			width: 100%;
+			height: 40vh;
+			margin: auto;
+		}
+		canvas {
+			width: 100% !important;
+			height: 100% !important;
+		}
+	</style>
+	<br /><br />
+	<div class="chartContainer">	
+		<canvas id="xyChart" height="300vh" color = "black"></canvas>	
+	</div>
+
+	<br /><br />
+	<div class="chartContainer">	
+		<canvas id = "lineChart" height="300vh" color = "black"></canvas>
+	</div>
+</body>
+</html>
