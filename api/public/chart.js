@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loaded = true;
     const canvas1 = document.getElementById('xyChart').getContext('2d');
     let chartConfig = {
-        label: "xYcHaRt",
+        label: "Robot XY Position",
         borderColor: 'red',
         data: [], //initially empty
         showLine: true
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         options: {
             responsive: true,
-            //maintainAspectRatio: false,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'linear',  // Ensure the x-axis is set to linear

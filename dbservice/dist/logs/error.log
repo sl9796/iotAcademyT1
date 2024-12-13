@@ -83,3 +83,5 @@
 {"level":"error","message":"Connection terminated","service":"logger01","timestamp":"2024-12-12 14:28:48"}
 {"level":"error","message":"MQTT Error read ECONNRESET","service":"logger01","timestamp":"2024-12-12 14:30:02"}
 {"level":"error","message":"Database error Connection terminated unexpectedly","service":"logger01","timestamp":"2024-12-12 14:30:02"}
+{"level":"error","message":"read ECONNRESET","service":"logger01","timestamp":"2024-12-12 15:24:41"}
+{"level":"error","message":"read ECONNRESET","service":"logger01","timestamp":"2024-12-12 15:25:00"}
